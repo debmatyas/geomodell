@@ -27,7 +27,7 @@ void setup() {
   frameRate(30);
   noLoop(); // Megállítja az alap animációs ciklust
 
-  loadOBJ("cube.obj");
+  loadOBJ("beetle.obj");
   rebuildMesh();
 }
 
