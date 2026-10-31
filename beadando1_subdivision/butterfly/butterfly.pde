@@ -21,7 +21,7 @@ void setup() {
   surface.setLocation(displayWidth / 2 - width / 2, displayHeight / 2 - height / 2);
   hint(ENABLE_DEPTH_TEST);
   
-  loadObjFile("beetle.obj"); 
+  loadObjFile("cube.obj"); 
   levelVertices.add(copyVertices(vertices));
   levelFaces.add(copyFaces(faces));
   
