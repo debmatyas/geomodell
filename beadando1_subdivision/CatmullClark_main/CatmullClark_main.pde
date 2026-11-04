@@ -26,7 +26,7 @@ void setup() {
   frameRate(30);
   noLoop(); // Megállítja az alap animációs ciklust
 
-  loadOBJ("beetle.obj");
+  loadOBJ("two_triangles.obj");
   rebuildMesh();
 }
 
