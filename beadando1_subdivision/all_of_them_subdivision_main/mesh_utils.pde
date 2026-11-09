@@ -4,7 +4,7 @@
 class EdgeData {
   HashMap<Long, Integer> index = new HashMap<Long, Integer>();
   ArrayList<int[]> ends = new ArrayList<int[]>();  // {a, b}
-  ArrayList<int[]> adj  = new ArrayList<int[]>();  // {lap0, lap1, laSzám}
+  ArrayList<int[]> adj  = new ArrayList<int[]>();  // {lap0, lap1, laSzám} 
   int vertexCount;
 
   EdgeData(int vertexCount) {
@@ -41,6 +41,7 @@ class EdgeData {
 
 EdgeData buildEdges(ArrayList<int[]> fs, int vertexCount) {
   EdgeData ed = new EdgeData(vertexCount);
+  
   for (int fi = 0; fi < fs.size(); fi++) {
     int[] f = fs.get(fi);
     for (int i = 0; i < f.length; i++) {

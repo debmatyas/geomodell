@@ -36,7 +36,7 @@ void loadObjFile(String filename) {
   // Középre igazítás és méretezés
   PVector sum = new PVector(0, 0, 0);
   for (PVector v : vertices) sum.add(v);
-  PVector center = PVector.div(sum, vertices.size());
+  PVector center = PVector.div(sum, vertices.size()); // modell súlypontja lesz
 
   float maxDist = 0;
   for (PVector v : vertices) {

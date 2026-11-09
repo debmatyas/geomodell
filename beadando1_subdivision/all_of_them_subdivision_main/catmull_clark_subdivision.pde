@@ -70,7 +70,23 @@ void applyCatmullClarkSubdivision() {
       PVector R = new PVector(0, 0, 0);
       for (int e : es) R.add(edgeMid[e]);
       R.div(n);
-
+      
+      // (F + 2R + (n − 3)P) / n.
+      /**
+      * - n a valencia, vagyis a csúcsból induló élek száma.
+      *
+      * - F a csúcsot körülvevő lapok laponti pontjainak átlaga. 
+      *   A lapokat a vFaces (5.2) adja, a laponti pontok az facePt 
+      *   tömbből jönnek. A max(1, fs.size()) védelem a nullával 
+      *   osztás ellen. Egy belső csúcsnál mindig van lap, de a védelem nem árt.
+      *
+      * - R a csúcsból induló élek felezőpontjainak átlaga. Itt jön 
+      *   elő az edgeMid tömb (5.3), és fontos, hogy a felezőpontokat 
+      *   használjuk, nem az élpontokat. Az élpont már befelé van húzva, 
+      *   a felezőpont viszont az él tényleges közepe.
+      *
+      * - P a csúcs régi helye.
+      */
       np = PVector.mult(F, 1.0);
       np.add(PVector.mult(R, 2.0));
       np.add(PVector.mult(P, n - 3));

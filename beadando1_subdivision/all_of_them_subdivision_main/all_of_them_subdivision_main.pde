@@ -5,7 +5,10 @@ import java.util.HashSet;
 ArrayList<PVector> vertices;
 ArrayList<int[]> faces;
 
-// Az eredeti (0. szintű) háló, ebből építjük újra a szinteket
+/**
+ * Az eredeti (0. szintű) háló, itt tároljuk a háló szerkezetét a beolvasás után,
+ * ebből építjük újra a szinteket
+ */
 ArrayList<PVector> baseVertices;
 ArrayList<int[]> baseFaces;
 
@@ -18,23 +21,39 @@ final int MAX_LEVELS = 4;
 int algorithm = 0;
 String[] algorithmNames = {"Catmull-Clark", "Loop", "Butterfly (+simítás)"};
 
-int renderMode = 0;
+int renderMode = 0;    // váz -> tömör test + váz -> tömör test
 float zoomZ = 200;
-float move;
-float rotX = 0;
-float rotY = 0;
-float lastMouseX, lastMouseY;
+float move;            // jobbra, balra mozgás (x tengely)
+float rotX, rotY = 0;  // kirajzolt test mozgása
+float lastMouseX, lastMouseY; // test mozgatásához kell, hogy ki tudjuk számolni
 
 void setup() {
   size(800, 600, P3D);
   move = width / 2;
+
+  // ablakot a monitor közepére teszi
   surface.setLocation(displayWidth / 2 - width / 2, displayHeight / 2 - height / 2);
+
+/*
+ * Mélységteszt (z-buffer). Ennek hatására a közelebbi lapok eltakarják a távolabbiakat,
+ * a rajzolás sorrendje pedig nem számít. E nélkül az utoljára rajzolt lap kerülne felülre
+ */
   hint(ENABLE_DEPTH_TEST);
 
-  loadObjFile("beetle.obj");
+  /**
+  * Közvetlenül a vertices és faces globális változókat tölti fel
+  */
+  loadObjFile("cube.obj");
+  /**
+  * Alaphálót elmentjük
+  * Ha csak simán baseVertices = vertices;-t írnánk, akkor csak a referencia másolódna át
+  */
   baseVertices = copyVertices(vertices);
   baseFaces = copyFaces(faces);
 
+  /**
+  * Kiszámolja az összes subdivision szintet az aktuális algoritmussal
+  */
   buildLevels();
 }
 
@@ -49,6 +68,9 @@ void buildLevels() {
   levelFaces.add(copyFaces(faces));
 
   for (int i = 0; i < MAX_LEVELS; i++) {
+    /**
+    * applySubdivision() fgv a veritces és faces változókba számolja ki a finomított hálót
+    */
     applySubdivision();
     levelVertices.add(copyVertices(vertices));
     levelFaces.add(copyFaces(faces));
@@ -69,7 +91,6 @@ void applySubdivision() {
 void draw() {
   background(20);
   lights();
-
   pushMatrix();
   translate(move, height / 2, zoomZ);
   rotateX(rotX);
